@@ -17,7 +17,7 @@ const receiveMsg = async () => {
   const connection = await amqplib.connect(url);
   const channel = await connection.createChannel();
 
-  await channel.assertExchange(exchangeName, 'direct', { durable: false });
+  await channel.assertExchange(exchangeName, 'direct', { durable: true });
 
   const q = await channel.assertQueue('', { exclusive: true });
 
