@@ -24,7 +24,7 @@ const sendMsg = async () => {
 
   const connection = await amqplib.connect(url);
   const channel = await connection.createChannel();
-  await channel.assertExchange(exchangeName, 'direct', { durable: false });
+  await channel.assertExchange(exchangeName, 'direct', { durable: true });
 
   if (messenger.msg) {
     channel.publish(exchangeName, messenger.routingKey, Buffer.from(messenger.msg));
@@ -50,11 +50,11 @@ const sendMsg = async () => {
   }
 }
 
-const connect = async (port) => {
+const connect = (port) => {
   return `amqp://admin:admin@0.0.0.0:${port}`;
 }
 
-const localhost = async () => {
+const localhost = () => {
   return `amqp://localhost`;
 }
 

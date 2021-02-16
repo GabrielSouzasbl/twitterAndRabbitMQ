@@ -17,7 +17,7 @@ const receiveMsg = async () => {
   const connection = await amqplib.connect(url);
   const channel = await connection.createChannel();
 
-  await channel.assertExchange(exchangeName, 'direct', { durable: false });
+  await channel.assertExchange(exchangeName, 'direct', { durable: true });
 
   const q = await channel.assertQueue('', { exclusive: true });
 
@@ -35,11 +35,11 @@ const receiveMsg = async () => {
     }, { noAck: true })
 }
 
-const connect = async (port) => {
+const connect = (port) => {
   return `amqp://admin:admin@0.0.0.0:${port}`;
 }
 
-const localhost = async () => {
+const localhost = () => {
   return `amqp://localhost`;
 }
 
