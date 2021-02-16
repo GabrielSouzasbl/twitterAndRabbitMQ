@@ -1,50 +1,35 @@
 const Twit = require('twit');
-const amqplib = require('amqplib');
-const TAM = 200;
 
 const T = new Twit({
-    consumer_key: '...',
-    consumer_secret: '...',
-    access_token: '...',
-    access_token_secret: '...'
+    consumer_key: '.',
+    consumer_secret: '.',
+    access_token: '.',
+    access_token_secret: '.'
 });
 
-const processTweets = async () => {
-    const arrayTweets = [];
+const arrayTweets = [];
+const TAM = 200;
 
-    const folha = await getUsersTweet('folha', TAM);
-    const estadao = await getUsersTweet('Estadao', TAM);
-    const globo = await getUsersTweet('oglobopolitica', TAM);
-
-    const folhaFormatted = await formatTweet(folha);
-    const estadaoFormatted = await formatTweet(estadao);
-    const globoFormatted = await formatTweet(globo);
-
-    for (let i = 0; i < TAM; i++) {
-        arrayTweets.push(folhaFormatted[i]);
-        arrayTweets.push(estadaoFormatted[i]);
-        arrayTweets.push(globoFormatted[i]);
+exports.execute = async (usersArray, amount) => {
+    for (const user of usersArray) {
+        await processTweets(user, amount);
     }
 
     shuffleArray(arrayTweets);
 
-    await sendMsg(arrayTweets);
+    return arrayTweets;
 }
 
-const sendMsg = async (arrayTweets) => {
-    const connection = await amqplib.connect('amqp://admin:admin@0.0.0.0:5672');
-    const channel = await connection.createChannel();
-    await channel.assertExchange('direct_tweets', 'direct', { durable: false });
+const processTweets = async (screenName, amount) => {
+    amount = amount ? amount : TAM;
 
-    for (const tweet of arrayTweets) {
-        const msg = tweet.text;
-        const queue = tweet.screenName;
+    const tweets = await getUsersTweet(screenName, amount);    
+    const formatted = await formatTweet(tweets);
 
-        channel.publish('direct_tweets', queue, Buffer.from(msg));
-        console.log('Sent: ', msg);
+    for (let i = 0; i < amount; i++) {
+        arrayTweets.push(formatted[i]);
     }
 }
-
 
 const getUsersTweet = (screenName, count) => {
     return new Promise((resolve, reject) => {
@@ -68,7 +53,7 @@ const formatTweet = async (tweets) => {
             userId: obj.id,
             screenName: obj.user.screen_name,
             name: obj.user.name,
-            text: obj.text
+            text: cleanText(obj.text).split('http')[0] + `(${obj.user.screen_name})`
         };
     });
 }
@@ -80,4 +65,10 @@ function shuffleArray(array) {
     }
 }
 
-processTweets();
+function cleanText(text) {
+    if (!text) {
+        return null;
+    }
+    // eslint-disable-next-line no-control-regex
+    return text.normalize('NFD').replace(/[^\u0009|\u000A|\u000D|\u0020-\u007E|\u0085|\u00A0-\u00FF]/g, '').replace(/[^a-z0-9 _-]/gi, '').toLowerCase();
+}
