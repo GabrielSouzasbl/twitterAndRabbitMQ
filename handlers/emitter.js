@@ -50,11 +50,11 @@ const sendMsg = async () => {
   }
 }
 
-const connect = async (port) => {
+const connect = (port) => {
   return `amqp://admin:admin@0.0.0.0:${port}`;
 }
 
-const localhost = async () => {
+const localhost = () => {
   return `amqp://localhost`;
 }
 
