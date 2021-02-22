@@ -6,7 +6,9 @@ const exchangeName = 'direct_tweets';
 const args = process.argv.slice(2);
 const messenger = {};
 
-if(args[0] === 'crawler') {
+const MSGS_COUNT = 100;
+
+if (args[0] === 'crawler') {
   messenger.port = args[1];
   messenger.usersArray = args[2].split(' ');
   messenger.amount = args[3];
@@ -36,13 +38,15 @@ const sendMsg = async () => {
     }, 500)
 
   } else {
-    const arrayMsg = await execute(messenger.usersArray, messenger.amount);
+    const arrayMsg = await execute(messenger.usersArray, MSGS_COUNT);
 
-    arrayMsg.forEach(msg => {
-      channel.publish(exchangeName, msg.screenName, Buffer.from(msg.text));
-      console.log('Sent: ', msg.text);
-    });
-
+    for (let i = 0; i < messenger.amount; i++) {      
+      arrayMsg.forEach(msg => {
+        channel.publish(exchangeName, msg.screenName, Buffer.from(msg.text));
+        console.log('Sent: ', msg.text);
+      });      
+    }
+    
     setTimeout(() => {
       connection.close();
       process.exit(0);
