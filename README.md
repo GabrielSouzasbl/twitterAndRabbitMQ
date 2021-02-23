@@ -63,7 +63,7 @@ $ node emitter.js crawler 5672 "folha Estadao" 100
 $ node handlers/emitter.js normal 0 nano "mesage test"
 ```
 
-### 2 - Iniciando o receiver
+### 3 - Iniciando o receiver
 
 - Acesse a pasta onde ele se encontra.
 ```shell
