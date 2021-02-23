@@ -29,7 +29,7 @@ $ cd twitterAndRabbitMQ/handlers
 ```
 - Execute o script emitter.js    
 
-> **_NOTA:_**  O comando emitter inicia o crawler de tweets na rede social twitter a partir dos parâmetros solicitados e após isso envia os textos para as filas parametrizadas do rabbitMQ.
+> **_NOTA:_**  O arquivo emitter.js inicia o crawler de tweets na rede social twitter a partir dos parâmetros solicitados e após isso envia os textos para as filas parametrizadas do rabbitMQ.
    
 #### Sobre os parâmetros:
 - Tipo de envio:
@@ -41,7 +41,7 @@ $ cd twitterAndRabbitMQ/handlers
   - 5672: Porta do cluster node.
 
 - Nome da fila:
-  - Para o tipo de envio -crawler-, este parâmetro NÂO deve ser expecificado
+  - Para o tipo de envio -crawler-, este parâmetro NÃO deve ser expecificado
   - "fila1" para o tipo de envio -normal-.
 
 - Usuários a serem extraídos:
@@ -62,7 +62,32 @@ $ node emitter.js crawler 5672 "folha Estadao" 100
 ```shell
 $ node handlers/emitter.js normal 0 nano "mesage test"
 ```
-    
+
+### 2 - Iniciando o receiver
+
+- Acesse a pasta onde ele se encontra.
+```shell
+$ cd twitterAndRabbitMQ/handlers
+```
+- Execute o script receiver.js    
+
+> **_NOTA:_**  O arquivo receiver.js inicia o consumo das mensagens publicadas pelo produtor na fila do rabbitMQ criada.
+
+#### Sobre os parâmetros:
+- Nó Consumidor:
+  - 0: Localhost
+  - 5673: Porta do cluster node.
+
+- Filas a serem consumidas:
+  - "fila1 fila2 fila3": Indica o nome das filas que o nó consumidor vai escutar e receber mensagens.
 
 
+#### Exemplos de emitter:
 
+```shell
+$ node handlers/receiver.js 0 folha Estadao
+```
+
+```shell
+$ node handlers/receiver.js 5672 folha 
+```
