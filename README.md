@@ -91,3 +91,12 @@ $ node handlers/receiver.js 0 folha Estadao
 ```shell
 $ node handlers/receiver.js 5672 folha 
 ```
+
+#### Referências e boas práticas com RabbitMq
+
+https://www.rabbitmq.com/
+https://www.cloudamqp.com/blog/2017-12-29-part1-rabbitmq-best-practice.html
+https://www.cloudamqp.com/blog/2018-01-08-part2-rabbitmq-best-practice-for-high-performance.html
+http://throughaglass.io/technology/Enterprise-Messaging-with-RabbitMQ-and-AMQP.html
+https://shivama205.medium.com/rabbitmq-best-practices-67a27ef72a57
+http://throughaglass.io/technology/RabbitMQ-cluster-with-Docker-and-Docker-Compose.html
