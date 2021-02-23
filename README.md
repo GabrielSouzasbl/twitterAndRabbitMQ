@@ -21,7 +21,7 @@ A inspiração para a criação deste projeto foi um trabalho realizado na disci
 ```shell
 $ npm install
 ```
-### 2 - Iniciando o emiiter
+### 2 - Iniciando o emiter
 
 - Acesse a pasta onde ele se encontra.
 ```shell
@@ -46,7 +46,7 @@ $ cd twitterAndRabbitMQ/handlers
 
 - Usuários a serem extraídos:
   - "usuario1 usuario2": user_name do usuario do twitter a ser crawleado. **Apenas para tipo de envio -crawler-**
-  - "texto da mensagem": Texto da mensagem a ser enviada. **Apenas para tipoi de envio -normal-**
+  - "texto da mensagem": Texto da mensagem a ser enviada. **Apenas para tipo de envio -normal-**
 
 - Quantidade de tweets:
   - Para o tipo de envio -normal-, este parâmetro NÂO deve ser expecificado
