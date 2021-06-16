@@ -7,7 +7,7 @@ A inspiração para a criação deste projeto foi um trabalho realizado na disci
 
 ### 0 - Dependências
 
-- Antes de começar a configurar o projeto Gn-Pix é necessário realizar os seguintes passos:
+- Antes de começar a configurar o projeto é necessário realizar os seguintes passos:
   - Clone o projeto [rabbitmq-docker](https://github.com/GabrielSouzasbl/rabbitmq)
   - Siga os passos descritos
   - Verifique se as instancias estão rodando
